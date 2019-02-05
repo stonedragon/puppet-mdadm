@@ -13,6 +13,9 @@ Puppet::Type.type(:mdadm).provide(:mdadm) do
     cmd << "-e #{resource[:metadata]}"
     cmd << resource.name
     cmd << "--level=#{resource[:level]}"
+    if resource[:force]
+      cmd << "--force"
+    end
     cmd << "--raid-devices=#{resource[:active_devices] || resource[:devices].size}"
     cmd << "--spare-devices=#{resource[:spare_devices]}" if resource[:spare_devices]
     cmd << "--parity=#{resource[:parity]}" if resource[:parity]
